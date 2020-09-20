@@ -1,0 +1,76 @@
+#!/bin/bash
+#This program deletes any file input by the user. It will determine reoccuring files in the diectory and delete selected files.
+
+
+#Joe Fulkerson
+#9-11-2020
+#Assignment3
+
+
+cd /home/jfulkerson
+mkdir WASTEBASKIT > /dev/null 2>&1
+#Direct to your host directory and create a WASTEBASKIT directoy for file removal
+
+cd /home/jfulkerson/Desktop/ITMO/
+
+#Check for file name input 
+if [ $# = 0 ]
+then
+	echo "File name not entered. "
+	echo "Usage: ./myrm f1 "
+	exit 1
+fi
+
+#Check for max number of arguements (1)
+#if [ $# != 1 ]
+#then
+#	echo "Too many arguements"
+#
+#	exit 1
+#fi
+
+#Assign file input to value for file manipulation
+while (($#))
+do
+
+FILE=$1
+
+
+#Check for file existence
+if [ -f $FILE ]
+then
+	echo "File Found"
+else
+	echo "File not found"
+	exit 1
+fi
+
+cd /home/jfulkerson/WASTEBASKIT/
+
+#Check for duplicate file names and re-appropriate file names into new bin
+if [ -f $FILE ]
+then
+	cd /home/jfulkerson/Desktop/ITMO
+	cp $FILE $FILE.$$
+	FILE2=$FILE.$$
+	/usr/bin/mv $FILE2 /home/jfulkerson/WASTEBASKIT
+	rm $FILE
+##If file does not need to be copied file is moved into WASTEBASKIT
+else
+	cd /home/jfulkerson/Desktop/ITMO/
+	/usr/bin/mv $FILE /home/jfulkerson/WASTEBASKIT
+fi
+shift
+done
+##Verification of file deletion
+if [ $? = 0 ]
+then
+	echo "Deletion Completed"
+else
+	echo"Deletion Failed"
+	exit 1
+
+fi
+
+exit 0
+

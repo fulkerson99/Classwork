@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#Joseph Fulkerson
+#9-19-2020
+
+#This program displays who is currently logged in until the user cancels the script
+
+while true
+do
+	finger
+	sleep 180
+done
+
+exit 0
+
+

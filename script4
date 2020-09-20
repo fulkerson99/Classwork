@@ -1,0 +1,59 @@
+#!/bin/bash
+#This program takes .bak files specified in a directory path and moves them to a target directory. 
+#Joseph Fulkerson
+#9/20/2020
+
+
+
+echo "Enter directory path for the file you want to copy. " #Directory path for .bak file search
+read d_path
+
+#Move user into directory
+cd $d_path  
+
+
+#Check user input syntax 
+if [ $? != 0 ]
+then 
+	echo "Directory path entered incorrectly "
+	echo "Usage: /home/user/ "
+	exit 1
+fi
+
+
+
+echo " " 
+
+
+#Target directory of copied .bak files
+echo "Enter target directory: "
+read t_path
+
+
+#Check user nput syntax
+if [ $? != 0 ]
+then 
+	echo "Target directory entered incorrectly "
+	echo "Usage: /home/user/"
+	exit 1
+fi
+
+echo " "
+
+
+#Search for .bak files   and copy and move into target directory
+for FILE in $(ls *.bak)
+do
+	echo "File Found: $FILE"
+	
+	cp $FILE $FILE.$$
+	f_copy=$FILE.$$
+	mv $f_copy $t_path
+	echo "$FILE was copied to $f_copy. "
+	echo " "
+done
+
+#Output success
+echo "--Program Executed Successfully--"
+ 
+exit 0
