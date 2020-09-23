@@ -21,6 +21,8 @@ aws ec2 describe-instances \
     --query 'Reservations[*].Instances[*].{Instance:InstanceId}' \
     --output text \
 
+echo text
+
 
 
 aws ec2 wait instance-running \
