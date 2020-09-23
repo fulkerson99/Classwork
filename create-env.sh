@@ -4,7 +4,7 @@
 
 #Declare instance array
 
-declare -a instance_id[0]
+
 
 
 aws ec2 run-instances \
@@ -17,16 +17,8 @@ aws ec2 run-instances \
 
 
 
-aws ec2 describe-instances \
-    --query 'Reservations[*].Instances[*].{Instance:InstanceId}' \
-    --output text \
-
-echo text
-
-
-
 aws ec2 wait instance-running \
-    --instance-ids $(instance_id[0],instance_id[1],instance_id[2]) \
+    --instance-ids $(aws ec2 describe-instances --query 'Reservations[*].Instances[*].{Instance:InstanceId}' ) \
 
 
 
@@ -34,7 +26,6 @@ aws elbv2 create-load-balancer \
     --name jf-ITMO-balance \
     --subnets subnet-1779d571 subnet-4ac5a344 \
 
-declare -a load_balance_arn[0]
 
 aws elbv2 describe-load-balancer-arns  \
     --output  = `load_balance_arn[*]` \
