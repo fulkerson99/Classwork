@@ -16,9 +16,10 @@ aws ec2 run-instances \
     --user-data file://install-env.sh ##Script executes upon launching of instance.
 
 
+
 aws ec2 describe-instances \
-    --output text = `instance_id[*] ` \
-    --query Reservations[0].{`id:InstanceId`} \
+    --query 'Reservations[*].Instances[*].{Instance:InstanceId}' \
+    --output text \
 
 
 
