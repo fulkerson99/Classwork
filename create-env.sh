@@ -30,7 +30,7 @@ aws elbv2 create-load-balancer \
 
 aws elbv2 wait load-balancer-exists \
     --load-balancer-arns $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{Arn:LoadBalancerArn}' --output text) \
-    --names jf-ITMO-balance \
+    
 
 
 
