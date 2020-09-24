@@ -12,7 +12,6 @@ aws ec2 run-instances \
     --instance-type t2.micro \
     --security-group-ids sg-08546f3802f02691 \
     --key-name desktoppc-ubuntu-vm2.priv \
-    --availability-zones us-east-1a \
     --count 3 \
     --user-data file://install-env.sh ##Script executes upon launching of instance.
 
