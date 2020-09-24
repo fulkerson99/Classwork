@@ -8,11 +8,11 @@
 
 
 aws ec2 run-instances \
-    --image-id ami-07efac79022b86107 \
+    --image-id ami-06b263d6ceff0b3dd \
     --instance-type t2.micro \
-    --count 3\
     --security-group-ids sg-0578335deaea2113a8 \
     --key-name desktoppc-ubuntu-vm2.priv \
+    --count 3 \
     --user-data file://install-env.sh ##Script executes upon launching of instance.
 
 
