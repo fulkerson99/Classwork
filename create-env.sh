@@ -29,17 +29,17 @@ aws elbv2 create-load-balancer \
 
 
 aws elbv2 wait load-balancer-exists \
-    --load-balancer-arns $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{LoadBalancerArn}' --output text) \
+    --load-balancer-arns $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{Arn:LoadBalancerArn}' --output text) \
     --names jf-ITMO-balance \
 
 
 
 aws ec2 describe load-balancer-available \
-    --load-balancer-arns $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{LoadBalancerArn}' --output text) \
+    --load-balancer-arns $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{Arn:LoadBalancerArn}' --output text) \
     --names jf-ITMO-balance \
 
 
-
+# Create Target groups
 aws elbv2 create-target-group \
     --name jf-ITMO-balance \
     --protocol HTTP \
@@ -47,22 +47,23 @@ aws elbv2 create-target-group \
     --target-type instance \
     --vpc-id 71c1390c
 
+# Register Target Groups
 aws elbv2 register-targets \
-    --target-group-arn $(aws elbv2 describe-target-groups --query 'TargetGroups[*].TargetGroupArn[*].{TargetGroupArn}' --output text) \
+    --target-group-arn $(aws elbv2 describe-target-groups --query 'TargetGroups[*].TargetGroupArn[*].{Arn:TargetGroupArn}' --output text) \
     --targets Id=$(aws ec2 describe-instances --query 'Reservations[].Instances[*].{Instance:InstanceId}' --output text ) \
 
 
-
+# Create listener
 aws elbv2 create-listener \
 
-    --load-balancer-arn $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{LoadBalancerArn}' --output text) \
+    --load-balancer-arn $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{Arn:LoadBalancerArn}' --output text) \
     --protocol HTTP \
     --port 80 \
-    --default-actions Type=forward,TargetGroupArn=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{LoadBalancerArn}' --output text) \
+    --default-actions Type=forward,TargetGroupArn=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{Arn:LoadBalancerArn}' --output text) \
 
 #Arn of target group
 aws elbv2 modify-target-group \
-    --target-group-arn $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{LoadBalancerArn}' --output text) \
+    --target-group-arn $(aws elbv2 describe-load-balancers --query 'LoadBalancers[].LoadBalancerArn[*].{Arn:LoadBalancerArn}' --output text) \
     --health-check-protocol HTTP \
     --health-check-port 80 \
 
