@@ -17,7 +17,7 @@ function os-flavor(){
 	echo "Linux Flavor:  "
 	echo
 	uname -r
-	echo "*" \* 25 
+	echo "-------------------------" 
 	echo
 }
 
