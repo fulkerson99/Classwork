@@ -94,7 +94,7 @@ task_slct
 
 
 function delete_job(){
- echo " " > joblist
+ vi joblist
  crontab joblist
  echo "--Job List Deleted--"
  task_slct
